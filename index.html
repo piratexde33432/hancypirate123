@@ -23,9 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Use dvh to account for mobile address bars */
-            height: 100vh;
-            height: 100dvh; 
+            height: 100dvh; /* Dynamic viewport height for mobile */
             margin: 0;
             padding: 20px;
             overflow: hidden;
@@ -71,7 +69,6 @@
             padding: 15px;
             flex-grow: 1;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -82,16 +79,13 @@
             font-size: 1.5rem;
             color: var(--text);
             line-height: 1.2;
-            padding: 0 10px;
         }
 
         /* --- KISS OVERLAY --- */
         .kiss-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -100,10 +94,7 @@
             visibility: hidden;
         }
 
-        .kiss-emoji {
-            font-size: 0px;
-            opacity: 0;
-        }
+        .kiss-emoji { font-size: 0px; opacity: 0; }
 
         @keyframes big-kiss {
             0% { font-size: 0px; opacity: 0; transform: scale(0.5) rotate(-20deg); }
@@ -115,7 +106,7 @@
         .show-kiss { visibility: visible; }
         .show-kiss .kiss-emoji { animation: big-kiss 3s forwards ease-in-out; }
 
-        /* --- EMPTY STATE --- */
+        /* --- UI ELEMENTS --- */
         .empty-state {
             position: absolute;
             text-align: center;
@@ -123,61 +114,70 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 1;
-            color: var(--accent);
-            padding: 20px;
         }
 
-        button {
+        #music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
             background: var(--accent);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* Adjustments for very small phones */
-        @media (max-height: 600px) {
-            .note-text { font-size: 1.2rem; }
-            .stack-container { height: 90vh; }
+        button.reload-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
+    <audio id="bg-music" loop>
+        <source src="https://cdn.discordapp.com/attachments/1432355515597459457/1490353946571571270/videoplayback.mp3?ex=69d3bfc6&is=69d26e46&hm=c4800e60d50f868cd67a513d78fa41e1593891a4678dc5e4672ee32bf3a7ab12&" type="audio/mpeg">
+    </audio>
+    <button id="music-btn">🎵</button>
+
     <div class="empty-state">
-        <h2 style="font-family: var(--handwriting); font-size: 2.5rem;">I can't wait to <br>hold you. ❤️</h2>
-        <button onclick="location.reload()">Swipe Again</button>
+        <h2 style="font-family: var(--handwriting); font-size: 2.5rem; color: var(--accent);">I can't wait to <br>hold you. ❤️</h2>
+        <button class="reload-btn" onclick="location.reload()">Start Over</button>
     </div>
 
     <div class="stack-container" id="stack">
         <div class="card" style="z-index: 1;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490348138618294516/IMG-20260404-WA0014.jpg?ex=69d3ba5d&is=69d268dd&hm=a36077eb558e9ffc5b2d421d98cc8369f11e3338b33eb042e8ddb9f0570063a7&=&format=webp&width=655&height=874">
-            <div class="note-area"><div class="note-text">It took time for us to find each other, but you were worth the wait.</div></div>
+            <div class="note-area"><div class="note-text">It was late, but it's going to be wonderful.</div></div>
         </div>
         <div class="card" style="z-index: 2;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490348139360817222/IMG-20260404-WA0015.jpg?ex=69d3ba5d&is=69d268dd&hm=c748d8cd80ce8aff926c20f41a3e27b209b1948dd4407bf0ec6c67d18d56d73c&=&format=webp&width=1165&height=874">
-            <div class="note-area"><div class="note-text">Even through a screen, your laugh is the highlight of my day.</div></div>
+            <div class="note-area"><div class="note-text">Even through a screen, you're my favorite view.</div></div>
         </div>
         <div class="card" style="z-index: 3;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490348139792564444/motion_photo_6142187964949806174.jpg?ex=69d3ba5d&is=69d268dd&hm=4e0b8291fcdb4c9139eb0ad4320440f268e29bf656035c107e1d70b7207deee9&=&format=webp&width=491&height=874">
-            <div class="note-area"><div class="note-text">I haven't even met you yet and I'm already so proud to be yours.</div></div>
+            <div class="note-area"><div class="note-text">I haven't met you yet, but I already know...</div></div>
         </div>
         <div class="card" style="z-index: 4;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490349965753712800/IMG-20260404-WA0009.jpg?ex=69d3bc11&is=69d26a91&hm=20fff059035e73cc135e544f2ffd0a9ca41912e8837e9852ba873c007f42df2e&=&format=webp&width=655&height=874">
-            <div class="note-area"><div class="note-text">Counting down the days until this screen becomes a reality. ✈️</div></div>
+            <div class="note-area"><div class="note-text">Counting down to the day we finally meet.</div></div>
         </div>
         <div class="card" style="z-index: 5;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490349962070851774/IMG-20260404-WA0010.jpg?ex=69d3bc10&is=69d26a90&hm=edfdc9a71a15ec2a9bfb7cde63f52434759a520d068d82a2075e0e0c44782877&=&format=webp&width=655&height=874">
-            <div class="note-area"><div class="note-text">You are absolutely gorgeous. Every. Single. Second.</div></div>
+            <div class="note-area"><div class="note-text">You are absolutely gorgeous. ❤️</div></div>
         </div>
         <div class="card" style="z-index: 6;">
             <img src="https://media.discordapp.net/attachments/1432355515597459457/1490348541128872087/image.png?ex=69d3babd&is=69d2693d&hm=881dc1affb974db3b02eec6a2e3aa151a60be15af5293816fac9d12873aeebd7&=&format=webp&quality=lossless">
-            <div class="note-area"><div class="note-text">The start of our "wonderful" story. I love you! ❤️</div></div>
+            <div class="note-area"><div class="note-text">Swipe through to see our future...</div></div>
         </div>
     </div>
 
@@ -186,20 +186,31 @@
     </div>
 
     <script>
-        const stack = document.getElementById('stack');
-        let startX = 0;
-        let activeCard = null;
-        let cardsRemaining = 6;
+const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        let startX = 0, activeCard = null, cardsRemaining = 6;
+        let musicStarted = false;
 
-        function triggerKiss() {
-            const overlay = document.getElementById('kiss-overlay');
-            overlay.classList.add('show-kiss');
-            setTimeout(() => overlay.classList.remove('show-kiss'), 3100);
+        // SKIP 15 SECONDS IMMEDIATELY
+        music.currentTime = 15;
+
+        function playMusic() {
+            if (!musicStarted) {
+                music.play().catch(() => {
+                    console.log("Interaction needed for autoplay");
+                });
+                musicBtn.textContent = "🔇";
+                musicStarted = true;
+            }
         }
 
+        musicBtn.onclick = () => {
+            if (music.paused) { music.play(); musicBtn.textContent = "🔇"; musicStarted = true; }
+            else { music.pause(); musicBtn.textContent = "🎵"; }
+        };
+
         function init() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
+            document.querySelectorAll('.card').forEach(card => {
                 card.addEventListener('mousedown', dragStart);
                 card.addEventListener('touchstart', dragStart, { passive: true });
             });
@@ -208,11 +219,6 @@
         function dragStart(e) {
             activeCard = e.currentTarget;
             startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-            
-            // Clean up old listeners first to be safe
-            document.removeEventListener('mousemove', dragMove);
-            document.removeEventListener('touchmove', dragMove);
-            
             document.addEventListener('mousemove', dragMove);
             document.addEventListener('touchmove', dragMove, { passive: false });
             document.addEventListener('mouseup', dragEnd);
@@ -221,18 +227,15 @@
 
         function dragMove(e) {
             if (!activeCard) return;
-            // Prevent scrolling while swiping
             if (e.cancelable) e.preventDefault();
-            
             const x = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
             const diff = x - startX;
-            const rotate = diff / 15;
-            activeCard.style.transform = `translateX(${diff}px) rotate(${rotate}deg)`;
+            activeCard.style.transform = `translateX(${diff}px) rotate(${diff / 15}deg)`;
         }
 
         function dragEnd(e) {
             if (!activeCard) return;
-            const x = (e.type === 'touchend') ? e.changedTouches[0].clientX : e.clientX;
+            const x = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
             const diff = x - startX;
 
             if (Math.abs(diff) > 100) {
@@ -241,12 +244,14 @@
                 activeCard.style.transform = `translateX(${dir}px) rotate(${dir/10}deg)`;
                 activeCard.style.opacity = '0';
                 
-                const cardToRemove = activeCard;
-                setTimeout(() => cardToRemove.remove(), 400);
-                
+                // Start music on first swipe
+                if (cardsRemaining === 6) playMusic();
+
+                const toRemove = activeCard;
+                setTimeout(() => toRemove.remove(), 400);
                 cardsRemaining--;
                 if (cardsRemaining === 0) {
-                    setTimeout(triggerKiss, 500);
+                    document.getElementById('kiss-overlay').classList.add('show-kiss');
                 }
             } else {
                 activeCard.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -256,7 +261,6 @@
             document.removeEventListener('mousemove', dragMove);
             document.removeEventListener('touchmove', dragMove);
         }
-
         init();
     </script>
 </body>
